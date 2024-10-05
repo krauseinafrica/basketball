@@ -1,10 +1,12 @@
 import streamlit as st
 from st_files_connection import FilesConnection
 
-# Create connection object and retrieve file contents.
-# Specify input format is a csv and to cache the result for 600 seconds.
+# Set up the connection using Streamlit secrets
 conn = st.connection('s3', type=FilesConnection)
-df = conn.read("basketballapp/myfile.csv", input_format="csv", ttl=600)
+
+# Retrieve file contents, specifying input format and cache duration
+s3_path = "s3://basketballapp/myfile.csv"
+df = conn.read(s3_path, input_format="csv", ttl=600)
 
 # Print results.
 for row in df.itertuples():
